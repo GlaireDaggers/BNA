@@ -1,0 +1,22 @@
+FileVersion = 1
+Dependencies = {corlib = "*", SDL2 = "*"}
+
+[Project]
+Name = "Beef-FNA3D"
+DefaultNamespace = "BNA"
+
+[Configs.Debug.Win32]
+LibPaths = ["$(ProjectDir)/lib/win32/FNA3D.lib", "$(ProjectDir)/lib/win32/SDL2.lib", "$(ProjectDir)/lib/win32/soloud.lib"]
+PostBuildCmds = ["CopyFilesIfNewer( \"$(ProjectDir)/lib/win32/FNA3D.dll\", \"$(TargetDir)\" )", "CopyFilesIfNewer( \"$(ProjectDir)/lib/win32/SDL2.dll\", \"$(TargetDir)\" )", "CopyToDependents( \"$(TargetDir)/FNA3D.dll\" )", "CopyToDependents( \"$(TargetDir)/SDL2.dll\" )", "CopyFilesIfNewer( \"$(ProjectDir)/lib/win32/soloud.dll\", \"$(TargetDir)\" )", "CopyToDependents( \"$(TargetDir)/soloud.dll\" )"]
+
+[Configs.Debug.Win64]
+LibPaths = ["$(ProjectDir)/lib/win64/FNA3D.lib", "$(ProjectDir)/lib/win64/SDL2.lib", "$(ProjectDir)/lib/win64/soloud.lib"]
+PostBuildCmds = ["CopyFilesIfNewer( \"$(ProjectDir)/lib/win64/FNA3D.dll\", \"$(TargetDir)\" )", "CopyFilesIfNewer( \"$(ProjectDir)/lib/win64/SDL2.dll\", \"$(TargetDir)\" )", "CopyToDependents( \"$(TargetDir)/FNA3D.dll\" )", "CopyToDependents( \"$(TargetDir)/SDL2.dll\" )", "CopyFilesIfNewer( \"$(ProjectDir)/lib/win64/soloud.dll\", \"$(TargetDir)\" )", "CopyToDependents( \"$(TargetDir)/soloud.dll\" )"]
+
+[Configs.Release.Win32]
+LibPaths = ["$(ProjectDir)/lib/win32/FNA3D.lib", "$(ProjectDir)/lib/win32/SDL2.lib", "$(ProjectDir)/lib/win32/soloud.lib"]
+PostBuildCmds = ["CopyFilesIfNewer( \"$(ProjectDir)/lib/win32/FNA3D.dll\", \"$(TargetDir)\" )", "CopyFilesIfNewer( \"$(ProjectDir)/lib/win32/SDL2.dll\", \"$(TargetDir)\" )", "CopyToDependents( \"$(TargetDir)/FNA3D.dll\" )", "CopyToDependents( \"$(TargetDir)/SDL2.dll\" )", "CopyFilesIfNewer( \"$(ProjectDir)/lib/win32/soloud.dll\", \"$(TargetDir)\" )", "CopyToDependents( \"$(TargetDir)/soloud.dll\" )"]
+
+[Configs.Release.Win64]
+LibPaths = ["$(ProjectDir)/lib/win64/FNA3D.lib", "$(ProjectDir)/lib/win64/SDL2.lib", "$(ProjectDir)/lib/win64/soloud.lib"]
+PostBuildCmds = ["CopyFilesIfNewer( \"$(ProjectDir)/lib/win64/FNA3D.dll\", \"$(TargetDir)\" )", "CopyFilesIfNewer( \"$(ProjectDir)/lib/win64/SDL2.dll\", \"$(TargetDir)\" )", "CopyToDependents( \"$(TargetDir)/FNA3D.dll\" )", "CopyToDependents( \"$(TargetDir)/SDL2.dll\" )", "CopyFilesIfNewer( \"$(ProjectDir)/lib/win64/soloud.dll\", \"$(TargetDir)\" )", "CopyToDependents( \"$(TargetDir)/soloud.dll\" )"]
