@@ -2,7 +2,7 @@ FileVersion = 1
 Dependencies = {corlib = "*", SDL2 = "*"}
 
 [Project]
-Name = "Beef-FNA3D"
+Name = "BNA"
 DefaultNamespace = "BNA"
 
 [Configs.Debug.Win32]

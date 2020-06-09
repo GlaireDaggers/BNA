@@ -493,10 +493,11 @@ namespace BNA.Graphics
 
 		private int SortTexture(SpriteCall lhs, SpriteCall rhs)
 		{
-			if(lhs.texture == rhs.texture)
-				return 0;
+			// kinda stupid, but if we take the raw texture pointers and turn them into integers, we can somewhat crudely sort on texture
+			let t1 = (int)(void*)(lhs.texture.[Friend]_handle);
+			let t2 = (int)(void*)(rhs.texture.[Friend]_handle);
 
-			return lhs.index <=> rhs.index;
+			return t1 <=> t2;
 		}
 	}
 }
