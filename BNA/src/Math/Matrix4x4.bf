@@ -115,6 +115,40 @@ namespace BNA.Math
 				));
 		}
 
+		public static Matrix4x4 Rotation(Quaternion rotation)
+		{
+			Matrix4x4 result;
+
+			float num9 = rotation.x * rotation.x;
+			float num8 = rotation.y * rotation.y;
+			float num7 = rotation.z * rotation.z;
+			float num6 = rotation.x * rotation.y;
+			float num5 = rotation.z * rotation.w;
+			float num4 = rotation.z * rotation.x;
+			float num3 = rotation.y * rotation.w;
+			float num2 = rotation.y * rotation.z;
+			float num = rotation.x * rotation.w;
+
+			result.M11 = 1f - (2f * (num8 + num7));
+			result.M12 = 2f * (num6 + num5);
+			result.M13 = 2f * (num4 - num3);
+			result.M14 = 0f;
+			result.M21 = 2f * (num6 - num5);
+			result.M22 = 1f - (2f * (num7 + num9));
+			result.M23 = 2f * (num2 + num);
+			result.M24 = 0f;
+			result.M31 = 2f * (num4 + num3);
+			result.M32 = 2f * (num2 - num);
+			result.M33 = 1f - (2f * (num8 + num9));
+			result.M34 = 0f;
+			result.M41 = 0f;
+			result.M42 = 0f;
+			result.M43 = 0f;
+			result.M44 = 1f;
+
+			return result;
+		}
+
 		public static Matrix4x4 operator*(Matrix4x4 matrix1, Matrix4x4 matrix2)
 		{
 			Matrix4x4 result = .();
@@ -140,6 +174,30 @@ namespace BNA.Math
 			result.M44 = matrix1.M41 * matrix2.M14 + matrix1.M42 * matrix2.M24 + matrix1.M43 * matrix2.M34 + matrix1.M44 * matrix2.M44; 
 
 			return result;
+		}
+
+		public static Vec4 operator*(Matrix4x4 matrix, Vec2 vec)
+		{
+			return Vec4((vec.x * matrix.M11) + (vec.y * matrix.M21) + (matrix.M31) + (matrix.M41),
+				(vec.x * matrix.M12) + (vec.y * matrix.M22) + (matrix.M32) + (matrix.M42),
+				(vec.x * matrix.M13) + (vec.y * matrix.M23) + (matrix.M33) + (matrix.M43),
+				(vec.x * matrix.M14) + (vec.y * matrix.M24) + (matrix.M34) + (matrix.M44));
+		}
+
+		public static Vec4 operator*(Matrix4x4 matrix, Vec3 vec)
+		{
+			return Vec4((vec.x * matrix.M11) + (vec.y * matrix.M21) + (vec.z * matrix.M31) + (matrix.M41),
+				(vec.x * matrix.M12) + (vec.y * matrix.M22) + (vec.z * matrix.M32) + (matrix.M42),
+				(vec.x * matrix.M13) + (vec.y * matrix.M23) + (vec.z * matrix.M33) + (matrix.M43),
+				(vec.x * matrix.M14) + (vec.y * matrix.M24) + (vec.z * matrix.M34) + (matrix.M44));
+		}
+
+		public static Vec4 operator*(Matrix4x4 matrix, Vec4 vec)
+		{
+			return Vec4((vec.x * matrix.M11) + (vec.y * matrix.M21) + (vec.z * matrix.M31) + (vec.w * matrix.M41),
+				(vec.x * matrix.M12) + (vec.y * matrix.M22) + (vec.z * matrix.M32) + (vec.w * matrix.M42),
+				(vec.x * matrix.M13) + (vec.y * matrix.M23) + (vec.z * matrix.M33) + (vec.w * matrix.M43),
+				(vec.x * matrix.M14) + (vec.y * matrix.M24) + (vec.z * matrix.M34) + (vec.w * matrix.M44));
 		}
 	}
 }
