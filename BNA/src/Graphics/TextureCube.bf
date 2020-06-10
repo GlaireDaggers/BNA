@@ -10,13 +10,13 @@ namespace BNA.Graphics
 		public readonly SurfaceFormat Format;
 		public readonly int MipCount;
 
-		public this(GraphicsDevice graphicsDevice, int size, SurfaceFormat format = .Color, int mipCount = 1)
+		public this(GraphicsDevice graphicsDevice, int size, SurfaceFormat format = .Color, int mipCount = 1, bool isRenderTarget = false)
 			: base(graphicsDevice)
 		{
 			Size = size;
 			Format = format;
 			MipCount = mipCount;
-			_handle = FNA3D_binding.CreateTextureCube(_device, format, (.)size, (.)mipCount, 0);
+			_handle = FNA3D_binding.CreateTextureCube(_device, format, (.)size, (.)mipCount, isRenderTarget ? 1 : 0);
 		}
 
 		public ~this()
