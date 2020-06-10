@@ -149,6 +149,48 @@ namespace BNA.Math
 			return result;
 		}
 
+		public static Matrix4x4 CreateOrthographic(float width, float height, float zNear, float zFar)
+		{
+			Matrix4x4 result;
+
+			result.M11 = 2f / width;
+			result.M12 = result.M13 = result.M14 = 0f;
+			result.M22 = 2f / height;
+			result.M21 = result.M23 = result.M24 = 0f;
+			result.M33 = 1f / (zNear - zFar);
+			result.M31 = result.M32 = result.M34 = 0f;
+			result.M41 = result.M42 = 0f;
+			result.M43 = zNear / (zNear - zFar);
+			result.M44 = 1f;
+
+			return result;
+		}
+
+		public static Matrix4x4 CreatePerspective(float fieldOfView, float aspectRatio, float near, float far)
+		{
+			let fov = fieldOfView * MathUtils.DEG2RAD;
+
+			Debug.Assert(fov > 0f && fov < Math.PI_f, "FOV must be >0 and <180");
+			Debug.Assert(near > 0f, "Near plane must be >0");
+			Debug.Assert(far > near, "Far plane must be greater than near plane");
+
+			Matrix4x4 result;
+
+			float num = 1f / ((float) Math.Tan((double) (fieldOfView * 0.5f)));
+			float num9 = num / aspectRatio;
+			result.M11 = num9;
+			result.M12 = result.M13 = result.M14 = 0;
+			result.M22 = num;
+			result.M21 = result.M23 = result.M24 = 0;
+			result.M31 = result.M32 = 0f;
+			result.M33 = far / (near - far);
+			result.M34 = -1;
+			result.M41 = result.M42 = result.M44 = 0;
+			result.M43 = (near * far) / (near - far);
+
+			return result;
+		}
+
 		public static Matrix4x4 operator*(Matrix4x4 matrix1, Matrix4x4 matrix2)
 		{
 			Matrix4x4 result = .();
