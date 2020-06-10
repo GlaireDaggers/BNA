@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Diagnostics;
 using BNA.bindings;
 using BNA.Math;
 using BNA.Utils;
@@ -313,9 +314,14 @@ namespace BNA.Graphics
 		private void LoadBuiltins()
 		{
 			// built-in effects
-			let blitBytes = ResourceUtility.ReadAllBytes("./Content/Shaders/blit.fxo");
-			_blit = new Effect( this, blitBytes );
-			delete blitBytes;
+			if(Effect.Load(this, "./Content/Shaders/blit.fxo") case .Ok(let effect))
+			{
+				_blit = effect;
+			}
+			else
+			{
+				Debug.FatalError("Failed to load built-in blit.fxo. Is the Content folder copied to the correct path?");
+			}
 
 			// blit quad geometry
 			_blitQuadVertexBuffer = new VertexBuffer(this);

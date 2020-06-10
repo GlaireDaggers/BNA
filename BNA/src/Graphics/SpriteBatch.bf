@@ -112,7 +112,15 @@ namespace BNA.Graphics
 		public this(GraphicsDevice context)
 		{
 			GraphicsDevice = context;
-			_spriteShader = Effect.Load(context, "./Content/Shaders/sprite.fxo");
+
+			if(Effect.Load(context, "./Content/Shaders/sprite.fxo") case .Ok(let effect))
+			{
+				_spriteShader = effect;
+			}
+			else
+			{
+				Debug.FatalError("Failed to load built-in sprite.fxo. Is the Content folder copied to the correct path?");
+			}
 		}
 
 		public ~this()
