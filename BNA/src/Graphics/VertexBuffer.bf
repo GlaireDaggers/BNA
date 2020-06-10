@@ -43,6 +43,12 @@ namespace BNA.Graphics
 
 	public sealed class VertexBuffer : IDisposable
 	{
+		private static class VertexDeclarationCache<TVertex>
+			where TVertex : struct
+		{
+			public static VertexDeclaration? Declaration;
+		}
+
 		public int VertexCount => _count;
 
 		private FNA3D_DeviceHandle* _deviceHandle;
@@ -121,6 +127,12 @@ namespace BNA.Graphics
 		private VertexDeclaration GenVertexDeclaration<TVertex>()
 			where TVertex : struct
 		{
+			// we've already got a declaration for this type cached, don't repeat unnecessary work
+			if(VertexDeclarationCache<TVertex>.Declaration.HasValue)
+			{
+				return VertexDeclarationCache<TVertex>.Declaration.Value;
+			}
+
 			// sanity check struct size to make sure it's aligned on a 16-byte boundary
 			if(sizeof(TVertex) % 16 != 0)
 			{
@@ -206,6 +218,8 @@ namespace BNA.Graphics
 
 			_elements = elementArray;
 
+			// cache the results
+			VertexDeclarationCache<TVertex>.Declaration = declaration;
 			return declaration;
 		}
 	}
