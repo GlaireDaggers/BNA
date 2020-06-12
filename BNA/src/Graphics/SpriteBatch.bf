@@ -448,17 +448,11 @@ namespace BNA.Graphics
 				// now we have actual draw calls, and vertex+index arrays.
 				// time to build some buffers and submit some draw calls!
 
-				let varray = scope SpriteVertex[_vtemp.Count];
-				_vtemp.CopyTo(varray);
-
-				let iarray = scope uint16[_itemp.Count];
-				_itemp.CopyTo(iarray);
-
 				let vbuffer = new VertexBuffer(GraphicsDevice);
-				vbuffer.Set(varray);
+				vbuffer.Set(Span<SpriteVertex>(_vtemp.Ptr, _vtemp.Count));
 
 				let ibuffer = new IndexBuffer(GraphicsDevice);
-				ibuffer.Set(iarray);
+				ibuffer.Set(Span<uint16>(_itemp.Ptr, _itemp.Count));
 
 				// we only need to bind the vertex buffer once, since all calls share the same buffer
 				GraphicsDevice.ApplyVertexBufferBinding(vbuffer);

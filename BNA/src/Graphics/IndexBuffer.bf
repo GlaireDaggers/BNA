@@ -79,5 +79,45 @@ namespace BNA.Graphics
 
 			FNA3D_binding.SetIndexBufferData(_device, _buffer, 0, data.CArray(), (.)_count * sizeof(uint32), .Discard);
 		}
+
+		public void Set(Span<uint16> data)
+		{
+			if(data.Length > _capacity || _elementType != .u16)
+			{
+				// we have to reallocate buffer in this case
+				if( _buffer != null )
+				{
+					FNA3D_binding.AddDisposeIndexBuffer(_device, _buffer);
+				}
+
+				_buffer = FNA3D_binding.GenIndexBuffer(_device, _dynamic ? 1 : 0, .WriteOnly, (.)data.Length, .u16);
+				_capacity = data.Length;
+				_elementType = .u16;
+			}
+
+			_count = data.Length;
+
+			FNA3D_binding.SetIndexBufferData(_device, _buffer, 0, data.Ptr, (.)_count * sizeof(uint16), .Discard);
+		}
+
+		public void Set(Span<uint32> data)
+		{
+			if(data.Length > _capacity || _elementType != .u16)
+			{
+				// we have to reallocate buffer in this case
+				if( _buffer != null )
+				{
+					FNA3D_binding.AddDisposeIndexBuffer(_device, _buffer);
+				}
+
+				_buffer = FNA3D_binding.GenIndexBuffer(_device, _dynamic ? 1 : 0, .WriteOnly, (.)data.Length, .u32);
+				_capacity = data.Length;
+				_elementType = .u32;
+			}
+
+			_count = data.Length;
+
+			FNA3D_binding.SetIndexBufferData(_device, _buffer, 0, data.Ptr, (.)_count * sizeof(uint32), .Discard);
+		}
 	}
 }

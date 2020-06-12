@@ -124,6 +124,32 @@ namespace BNA.Graphics
 			FNA3D_binding.SetVertexBufferData(_deviceHandle, _handle, 0, vertices.CArray(), (.)vertices.Count, sizeof(TVertex), sizeof(TVertex), .Discard);
 		}
 
+		public void Set<TVertex>(Span<TVertex> vertices)
+			where TVertex : struct
+		{
+			if(vertices.Length > _capacity || typeof(TVertex) != _lastType)
+			{
+				// we have to regenerate the vertex buffer in this case
+				if(_handle != null)
+				{
+					FNA3D_binding.AddDisposeVertexBuffer(_deviceHandle, _handle);
+				}
+
+				_vertexDeclaration = GenVertexDeclaration<TVertex>();
+				_handle = FNA3D_binding.GenVertexBuffer(_deviceHandle, _dynamic ? 1 : 0, .WriteOnly, (.)vertices.Length, sizeof(TVertex));
+
+				_binding.vertexBuffer = _handle;
+				_binding.vertexDeclaration = _vertexDeclaration;
+				_binding.vertexOffset = 0;
+				_binding.instanceFrequency = 0; //??
+
+				_capacity = vertices.Length;
+			}
+
+			_count = vertices.Length;
+			FNA3D_binding.SetVertexBufferData(_deviceHandle, _handle, 0, vertices.Ptr, (.)vertices.Length, sizeof(TVertex), sizeof(TVertex), .Discard);
+		}
+
 		private VertexDeclaration GenVertexDeclaration<TVertex>()
 			where TVertex : struct
 		{
