@@ -432,7 +432,10 @@ namespace BNA.Graphics
 			if(param.Rows != 4 || param.Columns != 4) return .Err;
 
 			let ptr = (Matrix4x4*)(param.[Friend]_param.value.values.values);
-			*ptr = value;
+
+			// unless compiled with /Zpc, shaders will expect column-major matrices
+			// so we'll transpose our row-major matrices to match
+			*ptr = Matrix4x4.Transpose(value);
 
 			return .Ok;
 		}
