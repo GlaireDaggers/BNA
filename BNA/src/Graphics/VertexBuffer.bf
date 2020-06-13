@@ -210,24 +210,17 @@ namespace BNA.Graphics
 					break;
 				}
 
-				// does field have a usage hint?
+				// does field have a usage hint? if not, don't bind it (it's probably a padding field!)
 				let result = field.GetCustomAttribute<VertexUsageAttribute>();
 				if( result case .Ok(let usage))
 				{
 					element.elementUsage = usage.usage;
 					element.usageIndex = (.)usage.usageIndex;
-				}
-				else
-				{
-					// default element usage is TextureCoordinate unless an attribute decoration specifies otherwise
-					element.elementUsage = .TextureCoordinate;
-					element.usageIndex = 0;
+					element.offset = curOffset;
+					elements.Add(element);
 				}
 
-				element.offset = curOffset;
 				curOffset += field.FieldType.Size;
-
-				elements.Add(element);
 			}
 
 			// copy to new array

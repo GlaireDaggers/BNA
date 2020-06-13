@@ -95,6 +95,16 @@ namespace BNA.Math
 			}
 		}
 
+		public static Matrix4x4 Transpose(Matrix4x4 mat)
+		{
+			return .(.(
+				mat.M11, mat.M21, mat.M31, mat.M41,
+				mat.M12, mat.M22, mat.M32, mat.M42,
+				mat.M13, mat.M23, mat.M33, mat.M43,
+				mat.M14, mat.M24, mat.M34, mat.M44
+				));
+		}
+
 		public static Matrix4x4 Scale(Vec3 scale)
 		{
 			return .(.(
@@ -176,7 +186,7 @@ namespace BNA.Math
 
 			Matrix4x4 result;
 
-			float num = 1f / ((float) Math.Tan((double) (fieldOfView * 0.5f)));
+			float num = 1f / Math.Tan(fieldOfView * 0.5f);
 			float num9 = num / aspectRatio;
 			result.M11 = num9;
 			result.M12 = result.M13 = result.M14 = 0;
