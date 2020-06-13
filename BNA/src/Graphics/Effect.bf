@@ -389,7 +389,7 @@ namespace BNA.Graphics
 			let param = GetParameter(paramName);
 			CheckParam!(param, ShaderParameterClass.Vector, ShaderParameterType.float);
 
-			if(param.Elements != 2) return .Err;
+			if(param.Columns != 2) return .Err;
 
 			let ptr = (Vec2*)(param.[Friend]_param.value.values.values);
 			*ptr = value;
@@ -402,7 +402,7 @@ namespace BNA.Graphics
 			let param = GetParameter(paramName);
 			CheckParam!(param, ShaderParameterClass.Vector, ShaderParameterType.float);
 
-			if(param.Elements != 3) return .Err;
+			if(param.Columns != 3) return .Err;
 
 			let ptr = (Vec3*)(param.[Friend]_param.value.values.values);
 			*ptr = value;
@@ -415,7 +415,7 @@ namespace BNA.Graphics
 			let param = GetParameter(paramName);
 			CheckParam!(param, ShaderParameterClass.Vector, ShaderParameterType.float);
 
-			if(param.Elements != 4) return .Err;
+			if(param.Columns != 4) return .Err;
 
 			let ptr = (Vec4*)(param.[Friend]_param.value.values.values);
 			*ptr = value;
