@@ -47,6 +47,12 @@ namespace BNA.Graphics
 			where TVertex : struct
 		{
 			public static VertexDeclaration? Declaration;
+			public static VertexElement[] Elements ~ delete _;
+
+			// WORKAROUND: Beef compiler fails as of nightly 5/30/2020 with unresolved external with above implicit destructor if I don't have this explicit constructor here
+			public static this()
+			{
+			}
 		}
 
 		public int VertexCount => _count;
@@ -62,7 +68,6 @@ namespace BNA.Graphics
 
 		private FNAVertexBufferBinding _binding;
 		private VertexDeclaration _vertexDeclaration;
-		private VertexElement[] _elements;
 
 		public this(GraphicsDevice graphicsDevice, bool dynamic = false)
 		{
@@ -87,11 +92,6 @@ namespace BNA.Graphics
 			if(_handle != null)
 			{
 				FNA3D_binding.AddDisposeVertexBuffer(_deviceHandle, _handle);
-			}
-
-			if(_elements != null)
-			{
-				delete _elements;
 			}
 
 			_deviceHandle = null;
@@ -232,13 +232,9 @@ namespace BNA.Graphics
 			declaration.elements = elementArray.CArray();
 			declaration.elementCount = (.)elementArray.Count;
 
-			if(_elements != null)
-				delete _elements;
-
-			_elements = elementArray;
-
 			// cache the results
 			VertexDeclarationCache<TVertex>.Declaration = declaration;
+			VertexDeclarationCache<TVertex>.Elements = elementArray;
 			return declaration;
 		}
 	}
