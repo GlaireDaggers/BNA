@@ -273,9 +273,7 @@ namespace BNA.Graphics
 			// some default initial setup...
 			SetViewport(.(0, 0, backbufferWidth, backbufferHeight));
 
-			var dsState = DepthStencilState();
-			dsState.depthBufferEnable = true;
-			dsState.stencilEnable = true;
+			var dsState = DepthStencilState.Default;
 
 			SetDepthStencilState(dsState);
 

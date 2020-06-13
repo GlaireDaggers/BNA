@@ -187,9 +187,7 @@ namespace BNA.Graphics
 
 			GraphicsDevice.SetBlendState(blendState);
 
-			DepthStencilState dsState = .();
-			dsState.depthBufferEnable = false;
-			dsState.stencilEnable = false;
+			DepthStencilState dsState = DepthStencilState.None;
 
 			GraphicsDevice.SetDepthStencilState(dsState);
 

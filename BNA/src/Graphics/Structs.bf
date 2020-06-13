@@ -179,6 +179,10 @@ namespace BNA.Graphics
 
 	public struct DepthStencilState
 	{
+		public static readonly DepthStencilState Default = .(true, true, .Less, false, 0, 0, .Keep, .Keep, .Keep, .Always, 0);
+		public static readonly DepthStencilState ZTestNoWrite = .(true, false, .Less, false, 0, 0, .Keep, .Keep, .Keep, .Always, 0);
+		public static readonly DepthStencilState None = .(false, false, .Always, false, 0, 0, .Keep, .Keep, .Keep, .Always, 0);
+
 		public bool depthBufferEnable;
 		public bool depthBufferWriteEnable;
 		public CompareFunction depthBufferFunction;
@@ -195,6 +199,31 @@ namespace BNA.Graphics
 		public StencilOperation ccwStencilPass;
 		public CompareFunction ccwStencilFunction;
 		public int32 referenceStencil;
+
+		public this(bool depthBufferEnable, bool depthBufferWriteEnable, CompareFunction depthFunc,
+			bool stencilEnable, int32 stencilMask, int32 stencilWriteMask, StencilOperation stencilFail, StencilOperation stencilDepthFail, StencilOperation stencilPass, CompareFunction stencilFunction,
+			int32 referenceStencil)
+		{
+			this.depthBufferEnable = depthBufferEnable;
+			this.depthBufferWriteEnable = depthBufferWriteEnable;
+			this.depthBufferFunction = depthFunc;
+
+			this.stencilEnable = stencilEnable;
+			this.stencilMask = stencilMask;
+			this.stencilWriteMask = stencilWriteMask;
+			this.stencilFail = stencilFail;
+			this.stencilDepthBufferFail = stencilDepthFail;
+			this.stencilPass = stencilPass;
+			this.stencilFunction = stencilFunction;
+
+			this.referenceStencil = referenceStencil;
+
+			this.twoSidedStencilMode = false;
+			this.ccwStencilFail = .Keep;
+			this.ccwStencilDepthBufferFail = .Keep;
+			this.ccwStencilPass = .Keep;
+			this.ccwStencilFunction = .Always;
+		}
 
 		public static operator FNADepthStencilState(DepthStencilState obj)
 		{
@@ -222,12 +251,25 @@ namespace BNA.Graphics
 
 	public struct RasterizerState
 	{
+		public static readonly RasterizerState Default = .(.Solid, .CullCounterClockwiseFace, 0f, 0f, true, false );
+		public static readonly RasterizerState DefaultMSAA = .(.Solid, .CullCounterClockwiseFace, 0f, 0f, true, true );
+
 		public FillMode fillMode;
 		public CullMode cullMode;
 		public float depthBias;
 		public float slopeScaleDepthBias;
 		public bool scissorTestEnable;
 		public bool multiSampleAntiAlias;
+
+		public this(FillMode fillMode, CullMode cullMode, float depthBias, float slopeScaleDepthBias, bool scissorTestEnable, bool multiSampleAntiAlias)
+		{
+			this.fillMode = fillMode;
+			this.cullMode = cullMode;
+			this.depthBias = depthBias;
+			this.slopeScaleDepthBias = slopeScaleDepthBias;
+			this.scissorTestEnable = scissorTestEnable;
+			this.multiSampleAntiAlias = multiSampleAntiAlias;
+		}
 
 		public static operator FNARasterizerState(RasterizerState obj)
 		{
