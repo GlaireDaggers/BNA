@@ -9,6 +9,7 @@ namespace BNA.Graphics
 	public struct Color
 	{
 		public static readonly Color White = .(1f, 1f, 1f);
+		public static readonly Color Black = .(0f, 0f, 0f);
 
 		public uint8 r;
 		public uint8 g;

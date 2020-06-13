@@ -8,6 +8,9 @@ namespace BNA.Math
 		public static readonly Vec3 Zero = .(0, 0, 0);
 		public static readonly Vec3 One = .(1, 1, 1);
 
+		public static readonly Vec3 Up = .(0f, 1f, 0f);
+	 	public static readonly Vec3 Backward = .(0f, 0f, 1f);
+
 		public float x;
 		public float y;
 		public float z;
@@ -58,5 +61,42 @@ namespace BNA.Math
 		{
 			return Vec3(lhs.x / rhs.x, lhs.y / rhs.y, lhs.z / rhs.z);
 		}
+
+
+		public static float Dot(Vec3 value1, Vec3 value2)
+		{
+		    return value1.x * value2.x + value1.y * value2.y + value1.z * value2.z;
+		}
+
+		public static void Cross(Vec3 vector1, Vec3 vector2, out Vec3 result)
+		{
+		    var x = vector1.y * vector2.z - vector2.y * vector1.z;
+		    var y = -(vector1.x * vector2.z - vector2.x * vector1.z);
+		    var z = vector1.x * vector2.y - vector2.x * vector1.y;
+		    result.x = x;
+		    result.y = y;
+		    result.z = z;
+		}
+
+
+		public static void Normalize(Vec3 value, out Vec3 result)
+		{
+		    float factor = (float)Math.Sqrt((value.x * value.x) + (value.y * value.y) + (value.z * value.z));
+		    factor = 1f / factor;
+		    result.x = value.x * factor;
+			result.y = value.y * factor;
+			result.z = value.z * factor;
+		}
+
+		public static void Transform(Vec3 position, ref Matrix4x4 matrix, out Vec3 result)
+		{
+		    var x = (position.x * matrix.M11) + (position.y * matrix.M21) + (position.z * matrix.M31) + matrix.M41;
+		    var y = (position.x * matrix.M12) + (position.y * matrix.M22) + (position.z * matrix.M32) + matrix.M42;
+		    var z = (position.x * matrix.M13) + (position.y * matrix.M23) + (position.z * matrix.M33) + matrix.M43;
+		    result.x = x;
+		    result.y = y;
+		    result.z = z;
+		}
+
 	}
 }

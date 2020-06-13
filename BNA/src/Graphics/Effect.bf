@@ -402,7 +402,7 @@ namespace BNA.Graphics
 			let param = GetParameter(paramName);
 			CheckParam!(param, ShaderParameterClass.Vector, ShaderParameterType.float);
 
-			if(param.Elements != 3) return .Err;
+			//if(param.Elements != 3) return .Err;
 
 			let ptr = (Vec3*)(param.[Friend]_param.value.values.values);
 			*ptr = value;
