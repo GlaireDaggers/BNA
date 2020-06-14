@@ -13,6 +13,8 @@ namespace BNA.Graphics
 		private bool _dynamic;
 		private IndexElementSize _elementType;
 
+		public int IndicesCount => _count;
+
 		public this(GraphicsDevice graphicsDevice, bool dynamic = false)
 		{
 			_device = graphicsDevice.[Friend]_deviceHandle;

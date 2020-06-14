@@ -251,5 +251,84 @@ namespace BNA.Math
 				(vec.x * matrix.M13) + (vec.y * matrix.M23) + (vec.z * matrix.M33) + (vec.w * matrix.M43),
 				(vec.x * matrix.M14) + (vec.y * matrix.M24) + (vec.z * matrix.M34) + (vec.w * matrix.M44));
 		}
+
+		public static Matrix4x4 CreateRotationX(float degree)
+		{
+			float radians = degree * MathUtils.DEG2RAD;
+
+			var val1 = (float)Math.Cos(radians);
+			var val2 = (float)Math.Sin(radians);
+
+			Matrix4x4 result = Matrix4x4.Identity;
+
+		    result.M22 = val1;
+		    result.M23 = val2;
+		    result.M32 = -val2;
+		    result.M33 = val1;
+
+			return result;
+		}
+
+		public static Matrix4x4 CreateRotationY(float degree)
+		{
+			float radians = degree * MathUtils.DEG2RAD;
+
+		    var val1 = (float)Math.Cos(radians);
+			var val2 = (float)Math.Sin(radians);
+
+			Matrix4x4 result = Matrix4x4.Identity;
+
+		    result.M11 = val1;
+		    result.M13 = -val2;
+		    result.M31 = val2;
+		    result.M33 = val1;
+
+			return result;
+		}
+
+		public static Matrix4x4 CreateRotationZ(float degree)
+		{
+			float radians = degree * MathUtils.DEG2RAD;
+
+			var val1 = (float)Math.Cos(radians);
+			var val2 = (float)Math.Sin(radians);
+
+			Matrix4x4 result = Matrix4x4.Identity;
+
+		    result.M11 = val1;
+		    result.M12 = val2;
+		    result.M21 = -val2;
+		    result.M22 = val1;
+
+			return result;
+		}
+
+		public static Matrix4x4 CreateLookAt(Vec3 cameraPosition, Vec3 cameraTarget, Vec3 cameraUpVector)
+		{
+			Matrix4x4 result;
+
+		    Vec3 vector = Vec3.Normalize(cameraPosition - cameraTarget);
+			Vec3 cross3 = Vec3.Cross(cameraUpVector, vector);
+		    Vec3 vector2 = Vec3.Normalize(cross3);
+		    Vec3 vector3 = Vec3.Cross(vector, vector2);
+		    result.M11 = vector2.x;
+		    result.M12 = vector3.x;
+		    result.M13 = vector.x;
+		    result.M14 = 0f;
+		    result.M21 = vector2.y;
+		    result.M22 = vector3.y;
+		    result.M23 = vector.y;
+		    result.M24 = 0f;
+		    result.M31 = vector2.z;
+		    result.M32 = vector3.z;
+		    result.M33 = vector.z;
+		    result.M34 = 0f;
+		    result.M41 = -Vec3.Dot(vector2, cameraPosition);
+		    result.M42 = -Vec3.Dot(vector3, cameraPosition);
+		    result.M43 = -Vec3.Dot(vector, cameraPosition);
+		    result.M44 = 1f;
+
+			return result;
+		}
 	}
 }
