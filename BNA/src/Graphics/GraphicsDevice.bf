@@ -356,7 +356,7 @@ namespace BNA.Graphics
 			FNA3D_binding.BeginFrame(_deviceHandle);
 		}
 
-		public void Clear(ClearOptions options, Color color, float depth = 0f, int stencil = 0)
+		public void Clear(ClearOptions options, Color color, float depth = 1f, int stencil = 0)
 		{
 			Vec4 clearCol = (.)color;
 			FNA3D_binding.Clear(_deviceHandle, options, &clearCol, depth, (.)stencil);
