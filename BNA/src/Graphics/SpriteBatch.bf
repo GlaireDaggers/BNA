@@ -452,6 +452,9 @@ namespace BNA.Graphics
 				let ibuffer = new IndexBuffer(GraphicsDevice);
 				ibuffer.Set(Span<uint16>(_itemp.Ptr, _itemp.Count));
 
+				// we have to do this upfront before applying vertex buffer bindings, otherwise it will fail
+				_spriteShader.ApplyEffect(0);
+
 				// we only need to bind the vertex buffer once, since all calls share the same buffer
 				GraphicsDevice.ApplyVertexBufferBinding(vbuffer);
 
