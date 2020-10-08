@@ -32,6 +32,17 @@ namespace BNA.Graphics
 			this.a = (.)( a * 255f );
 		}
 
+		public this(uint32 packed)
+		{
+			// Stored as RGBA with R in the least significant octet:
+			// |-------|-------|-------|-------
+			// A       B       G       R
+			this.r = (uint8)(packed & 0xFF);
+			this.g = (uint8)(packed>>8 & 0xFF);
+			this.b = (uint8)(packed>>16 & 0xFF);
+			this.a = (uint8)(packed>>24 & 0xFF);
+		}
+
 		public static operator Vec4(Color color)
 		{
 			return Vec4(color.r / 255f, color.g / 255f, color.b / 255f, color.a / 255f);
